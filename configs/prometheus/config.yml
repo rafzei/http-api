@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 3s
+  external_labels:
+    monitor: "example-app"
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "app"
+    static_configs:
+    dns_sd_configs:
+      - names: ["http-api_app_1"]
+        port: 5000
+        type: A
+        refresh_interval: 5s

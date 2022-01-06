@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./configs/prometheus/config.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ./configs/grafana/config.ini:/etc/grafana/grafana.ini
+      - ./configs/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/default.yaml
+      - ./configs/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/default.yaml
+      - ./configs/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - 3000:3000
+
