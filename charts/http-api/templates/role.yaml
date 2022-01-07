@@ -1,0 +1,18 @@
+{{- if .Values.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "http-api.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "http-api.labels" . | nindent 4 }}
+  {{- with .Values.rbac.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["deployments", "replicasets", "pods", "services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+{{- end }}

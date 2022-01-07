@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "http-api.fullname" . }}-pre"
+  labels:
+    {{- include "http-api.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install, pre-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migration
+          image: busybox
+          command: ['echo']
+          args: ['Doing some fancy migration here...']
+      restartPolicy: Never
