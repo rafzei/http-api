@@ -1,0 +1,45 @@
+# Config for container-structure-test, see ..docs/tests.md
+
+schemaVersion: '2.0.0'
+commandTests:
+- name: 'Check python'
+  command: 'python'
+  args: ['--version']
+  expectedOutput: ['Python 3.*']
+  exitCode: 0
+# TODO: check if possible to add timeout
+# - name: 'Check app'
+#   setup: [['python', '/app/app.py']]
+#   command: 'ps'
+#   args: ['-aux']
+fileExistenceTests:
+- name: '/app/app.py'
+  path: '/app/app.py'
+  shouldExist: true
+  permissions: '-rw-rw-r--'
+  uid: 0
+  gid: 0
+- name: '/app/payload.py'
+  path: '/app/payload.py'
+  shouldExist: true
+  permissions: '-rw-rw-r--'
+  uid: 0
+  gid: 0
+- name: '/app/requirements.txt'
+  path: '/app/requirements.txt'
+  shouldExist: true
+  permissions: '-rw-rw-r--'
+  uid: 0
+  gid: 0
+metadataTest:
+  labels:
+    - key: 'org.opencontainers.image.authors'
+      value: 'Rafal Zeidler'
+    - key: 'org.opencontainers.image.version'
+      value: '^[0-9]\.[0-9]\.[0-9]$'
+      isRegex: true
+  exposedPorts: ["5000"]
+  entrypoint: []
+  cmd: ["python", "app.py"]
+  workdir: "/app"
+  user: "app"

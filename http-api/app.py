@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from prometheus_flask_exporter import PrometheusMetrics
+# TODO: Get data from database
 from payload import users
+
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
