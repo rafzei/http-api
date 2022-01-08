@@ -1,0 +1,28 @@
+---
+# Source: http-api/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: opa
+  labels:
+    app.kubernetes.io/name: opa
+    app.kubernetes.io/instance: opa
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  defaultBackend:
+    service:
+      name: opa
+      port:
+        number: 8181
+  rules:
+    - host: "minikube.local"
+      http:
+        paths:
+          - path: /opa/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: opa
+                port:
+                  number: 8181
