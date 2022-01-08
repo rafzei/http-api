@@ -15,5 +15,4 @@ spec:
         - name: migration
           image: busybox
           command: ['echo']
-          args: ['Doing some fancy migration here...']
-      restartPolicy: Never
+          args: ['Doing some migration here...']
